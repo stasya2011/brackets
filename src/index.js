@@ -1,35 +1,26 @@
 module.exports = function check(str, bracketsConfig) {
     // your solution
-    let count = 0;
+    let count =0;
     let arr = [];
 
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] == "(" || str[i] == "{" || str[i] == "[" || str[i] == "|") {           
-            if (str[i] == "|") {
-                arr.push(str[i]);          
-            }
-            count++;
+  for(let i=0; i<str.length; i++){
+      for(let k=0; k<bracketsConfig.length; k++){
+          if(str[i] == bracketsConfig[k][0] && bracketsConfig[k][0] === bracketsConfig[k][1]){
+              count++;            
+             
+          }else if(str[i] == bracketsConfig[k][0] && bracketsConfig[k][0] !== bracketsConfig[k][1]){
+            arr.push(str[i]);
+          }else if(str[i] == bracketsConfig[k][1]){
+              if(arr.length === 0 || arr[arr.length-1] !== bracketsConfig[k][0]){
+                  console.log(arr);
+                  return false;
+              }
 
-        } else {
-            count--;
-        }
-
-        if (count < 0) {
-            break;
-        }
-    }
-
-    if (arr.length % 2 == 0) {
-        count = count - 2 * (arr.length / 2);
-
-    } else {
-        count--;
-    }
-
-    if (count != 0) {
-        return false;
-    } else {
-        return true; //
-    }
+              arr.pop();
+              console.log(arr);
+          }
+      }
+  }
+  return arr.length === 0 && count%2===0;
 
 };
