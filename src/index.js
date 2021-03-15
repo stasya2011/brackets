@@ -1,26 +1,47 @@
 module.exports = function check(str, bracketsConfig) {
     // your solution
-    let count =0;
-    let arr = [];
+    let seporatArr;
+    if (str.length % 2 != 0) {
+        return false;
+    }else {
+        for (let item = 0; item < bracketsConfig.length;) {
+            seporatArr = bracketsConfig[item].join("");
+            // console.log(seporatArr);
+            if (str.indexOf(seporatArr) != "-1") {
+                str = str.replace(seporatArr, "");
+                //console.log(str)
+                item = 0;
+            } else {
+                item += 1;
+            }
+        }
 
-  for(let i=0; i<str.length; i++){
-      for(let k=0; k<bracketsConfig.length; k++){
-          if(str[i] == bracketsConfig[k][0] && bracketsConfig[k][0] === bracketsConfig[k][1]){
-              count++;            
-             
-          }else if(str[i] == bracketsConfig[k][0] && bracketsConfig[k][0] !== bracketsConfig[k][1]){
-            arr.push(str[i]);
-          }else if(str[i] == bracketsConfig[k][1]){
-              if(arr.length === 0 || arr[arr.length-1] !== bracketsConfig[k][0]){
-                  console.log(arr);
-                  return false;
-              }
+        return (str.length == "0") ? true : false;
+        
+    }
 
-              arr.pop();
-              console.log(arr);
-          }
-      }
-  }
-  return arr.length === 0 && count%2===0;
+
 
 };
+
+// console.log(check('((()))()', [
+//     ['(', ')']
+// ])); // -> true
+// console.log(check('())(', [
+//     ['(', ')']
+// ])); // -> false))
+// console.log(check('([{}])', [
+//     ['(', ')'],
+//     ['[', ']'],
+//     ['{', '}']
+// ])); // -> true
+// console.log(check('[(])', [
+//     ['(', ')'],
+//     ['[', ']']
+// ])); // -> false
+// console.log(check('()', [
+//     ['(', ')']
+// ])); // -> true
+// console.log(check('((()))()', [
+//     ['(', ')']
+// ])); // -> true)
